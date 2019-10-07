@@ -1,0 +1,49 @@
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+a {
+    color: #5d5a5a !important;
+}
+
+.form-control:focus{
+    box-shadow: 0 0 0 0.1rem rgba(156, 156, 156, 0.8) !important;
+    border-color: gray !important;
+}
+#messages::-webkit-scrollbar {
+    display: none;
+}
+
+.main {
+    min-height: 100%;
+}
+.maincentre{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.form {
+
+}
+.meeting {
+    font-size: 30px;
+    font-family: "Courier New";
+}
+#messages {
+    overflow: visible;
+    overflow-x: hidden;
+    max-height: 400px;
+    min-height: 400px;
+    word-break: break-word;
+}
+#header {
+    min-height: 150px;
+    text-align: center;
+    font-family: "Courier New";
+
+}
+#wheel {
+    display: none;
+}
