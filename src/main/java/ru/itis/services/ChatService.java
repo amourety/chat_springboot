@@ -2,25 +2,18 @@ package ru.itis.services;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.BadCredentialsException;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import ru.itis.dto.LoginDto;
-import ru.itis.dto.MessageDto;
-import ru.itis.dto.TokenDto;
-import ru.itis.dto.UserForm;
+import ru.itis.dto.*;
+import ru.itis.models.Location;
 import ru.itis.models.Message;
-import ru.itis.models.Token;
-import ru.itis.models.User;
+import ru.itis.repositories.ChatRepository;
 import ru.itis.repositories.MessageRepository;
-import ru.itis.repositories.TokenRepository;
 import ru.itis.repositories.UserRepository;
-import ru.itis.security.UsersDetailsImpl;
 
-import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 @Service
 public class ChatService {
@@ -29,10 +22,10 @@ public class ChatService {
     private MessageRepository messageRepository;
 
     @Autowired
-    private UserRepository userRepository;
+    private ChatRepository chatRepository;
 
     @Autowired
-    private TokenRepository tokenRepository;
+    private UserRepository userRepository;
 
     @Autowired
     public PasswordEncoder passwordEncoder;
@@ -41,67 +34,59 @@ public class ChatService {
         return messageRepository.findAll();
     }
 
-    public List<MessageDto> getAllConvertedMessages(){
-        List<Message> messages = getAllMessages();
-        List<MessageDto> messageDto = new ArrayList<>();
-
-        SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss");
-        for(Message m: messages){
-            messageDto.add(MessageDto.builder()
-                    .username(userRepository.find(m.getUserId()).getUsername())
-                    .text(m.getText())
-                    .time(dateFormat.format(m.getTime()))
-                    .build());
-        }
+    public List<MessageDto> getAllConvertedMessages(Long id){
+        List<MessageDto> messageDto = findMessageAsString(id);
         Collections.reverse(messageDto);
         return messageDto;
     }
-    public MessageDto convert(Message m){
-        return MessageDto.builder()
-                .username(userRepository.find(m.getUserId()).getUsername())
-                .text(m.getText())
-                .build();
+
+
+
+    public void addMessage(MessageDto message) {
+        message.addTime();
+        messageRepository.saveWS(message);
     }
 
-    public void addMessage(Message message) {
-        messageRepository.save(message);
+    public List<MessageDto> findMessageAsString(Long id) {
+        return messageRepository.findMessageAsString(id);
     }
 
 
-    public void signUp(UserForm userForm) {
-        User user = User.builder()
-                .username(userForm.getUsername())
-                .password(passwordEncoder.encode(userForm.getPassword()))
-                .build();
-        userRepository.save(user);
-
-    }
-    public boolean login(LoginDto loginData) {
-        User userCandidate = userRepository.findByUsername(loginData.getLogin());
-        if (userCandidate != null) {
-            if (passwordEncoder.matches(loginData.getPassword(), userCandidate.getPassword())) {
-                return true;
-            }
-        } throw new BadCredentialsException("Incorrect login or password");
-
+    public void saveUserToChat(String username, Long chatId) {
+        chatRepository.save(Location.builder().username(username).chatId(chatId).build());
     }
 
-    public TokenDto token(LoginDto loginData) {
-        User userCandidate = userRepository.findByUsername(loginData.getLogin());
+    public boolean isUserWithoutChatRoom(String username) {
+        Location location = chatRepository.findByUsername((username));
+        return location != null && location.getChatId() != null;
+    }
 
-        if (userCandidate != null) {
-            if (passwordEncoder.matches(loginData.getPassword(), userCandidate.getPassword())) {
-                String value = UUID.randomUUID().toString();
-                Token token = Token.builder()
-                        .value(value)
-                        .userId(userCandidate.getId())
-                        .createdAt(LocalDateTime.now())
-                        .expiredDateTime(LocalDateTime.now().plusSeconds(10000))
-                        .build();
-                tokenRepository.save(token);
-                System.out.println("userCandidate:" + userCandidate.getUsername() + ": token : " + token.getValue());
-                return TokenDto.from(value);
-            }
-        } throw new BadCredentialsException("Incorrect login or password");
+    public void updateUserChat(String username, Long chatId) {
+        chatRepository.update(Location.builder().username(username).chatId(chatId).build());
+    }
+    public Location findRoom(String username){
+        return chatRepository.findByUsername(username);
+    }
+
+    public Long getAliveChat() {
+        Location location = chatRepository.findAliveChat();
+        if (location == null){
+            return 1L;
+        } else {
+            return location.getChatId();
+        }
+    }
+
+    public List<String> getChatRoomUserNames(String id) {
+        List<Location> locations = getLocationByChatId(String.valueOf(id));
+        List<String> usernameList = new ArrayList<>();
+        for(Location location : locations){
+            System.out.println(location.getUsername());
+            usernameList.add(location.getUsername());
+        }
+        return usernameList;
+    }
+    private List<Location> getLocationByChatId(String id) {
+        return chatRepository.findAllByChat(Long.parseLong(id));
     }
 }

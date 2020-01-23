@@ -24,6 +24,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         }
         return null;
     }
+
     public UserDetails loadUserByUsernameByToken(String token) {
         User user = userRepository.findUserByToken(token);
         if (user != null){

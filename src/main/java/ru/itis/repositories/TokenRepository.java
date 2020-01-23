@@ -37,11 +37,11 @@ public class TokenRepository implements CrudRepository<Token> {
     @Override
     public void save(Token model) {
         //language=SQL
-        String SQL = "INSERT INTO lp_token (value, user_id, start_time,end_time) VALUES (?,?,?,?)";
+        String SQL = "INSERT INTO tokens (value, user_id, start_time,end_time) VALUES (?,?,?,?)";
         //language=SQL
-        String SQL2 = "DELETE from lp_token where user_id = ?";
+        String SQL2 = "DELETE from tokens where user_id = ?";
         template.update(SQL2, model.getUserId());
-        template.update(SQL, model.getValue(),model.getUserId(), Timestamp.valueOf(model.getCreatedAt()),Timestamp.valueOf(model.getExpiredDateTime()));
+        template.update(SQL, model.getValue(),model.getUserId(), Timestamp.valueOf(model.getCreatedAt()), Timestamp.valueOf(model.getExpiredDateTime()));
     }
 
     @Override
@@ -49,9 +49,10 @@ public class TokenRepository implements CrudRepository<Token> {
 
     }
 
+
     public void deleteTokensByExpiredDateTimeBefore(LocalDateTime now) {
         //language=SQL
-        String SQL = "DELETE from lp_token where end_time >= ?";
+        String SQL = "DELETE from tokens where end_time >= ?";
         template.update(SQL, Timestamp.valueOf(now));
     }
 }

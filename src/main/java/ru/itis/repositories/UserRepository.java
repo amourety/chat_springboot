@@ -18,16 +18,16 @@ public class UserRepository implements CrudRepository<User> {
 
 
     //language=SQL
-    private static final String FIND_ALL = "SELECT * FROM lp_user";
+    private static final String FIND_ALL = "SELECT * FROM users";
 
     //language=SQL
-    private static final String FIND = "SELECT * FROM lp_user where id = ?";
+    private static final String FIND = "SELECT * FROM users where id = ?";
 
     //language=SQL
-    private static final String SAVE = "INSERT INTO lp_user(username,password) VALUES (?,?)";
+    private static final String SAVE = "INSERT INTO users(username,password) VALUES (?,?)";
 
     //language=SQL
-    private static final String UPDATE = "UPDATE lp_user SET username = ?, password = ? where id = ?";
+    private static final String UPDATE = "UPDATE users SET username = ?, password = ? where id = ?";
 
 
     private RowMapper<User> rowMapperToken = (resultSet, i) -> User.builder()
@@ -40,11 +40,16 @@ public class UserRepository implements CrudRepository<User> {
                     .userId(resultSet.getLong("user_id"))
                     .build())
             .build();
+
     private RowMapper<User> rowMapper = (resultSet, i) -> User.builder()
             .id(resultSet.getLong("id"))
             .username(resultSet.getString("username"))
             .password(resultSet.getString("password"))
             .build();
+    private RowMapper<User> validateRowMapper = (resultSet, i) -> User.builder()
+            .username(resultSet.getString("username"))
+            .build();
+
 
 
     @Override
@@ -63,7 +68,7 @@ public class UserRepository implements CrudRepository<User> {
 
     public User findByUsernameToken(String username) {
         //language=SQL
-        String SQL = "SELECT user2.id, user2.username,user2.password, token2.id as token_id, token2.value, token2.user_id FROM lp_user user2 join lp_token token2 on user2.id  = token2.user_id where user2.username = ?";
+        String SQL = "SELECT u.id, u.username,u.password, token2.id as token_id, token2.value, token2.user_id FROM users u join tokens token2 on u.id  = token2.user_id where u.username = ?";
         try {
             return template.queryForObject(SQL, rowMapperToken, username);
         } catch (EmptyResultDataAccessException e) {
@@ -72,7 +77,7 @@ public class UserRepository implements CrudRepository<User> {
     }
     public User findByUsername(String username) {
         //language=SQL
-        String SQL = "SELECT * FROM lp_user user2 where user2.username = ?";
+        String SQL = "SELECT * FROM users u where u.username = ?";
         try {
             return template.queryForObject(SQL, rowMapper, username);
         } catch (EmptyResultDataAccessException e) {
@@ -92,11 +97,21 @@ public class UserRepository implements CrudRepository<User> {
 
     public User findUserByToken(String token) {
         //language=SQL
-        String SQL = "SELECT user2.id, user2.username,user2.password, token2.id as token_id, token2.value, token2.user_id FROM lp_user user2 join lp_token token2 on user2.id  = token2.user_id where token2.value = ?";
+        String SQL = "SELECT u.id, u.username,u.password, token2.id as token_id, token2.value, token2.user_id FROM users u join tokens token2 on u.id  = token2.user_id where token2.value = ?";
         try {
             return template.queryForObject(SQL, rowMapperToken, token);
         } catch (EmptyResultDataAccessException e) {
             return null;
         }
     }
+    public User findUserByTokenWithoutData(String token){
+        //language=SQL
+        String SQL = "SELECT u.id, u.username FROM users u join tokens token2 on u.id  = token2.user_id where token2.value = ?";
+        try {
+            return template.queryForObject(SQL, validateRowMapper, token);
+        } catch (EmptyResultDataAccessException e) {
+            return null;
+        }
+    }
+
 }
