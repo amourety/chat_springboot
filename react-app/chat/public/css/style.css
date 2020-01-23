@@ -1,0 +1,446 @@
+/*плавная загрузка страниц*/
+@-webkit-keyframes fade-in {   0% { opacity: 0.1; }   100% { opacity: 1; }   }
+@-moz-keyframes    fade-in {   0% { opacity: 0.1; }   100% { opacity: 1; }   }
+@-o-keyframes      fade-in {   0% { opacity: 0.1; }   100% { opacity: 1; }   }
+@keyframes         fade-in {   0% { opacity: 0.1; }   100% { opacity: 1; }   }
+
+body {
+  -webkit-animation: fade-in 1s linear; /* Safari 4+ */
+  -moz-animation: fade-in 1s linear; /* Fx 5+ */
+  -o-animation: fade-in 1s linear; /* Opera 12+ */
+  animation: fade-in 1s linear; /* IE 10+, Fx 29+ */
+}
+
+
+html, body {
+    cursor: default;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    scroll-behavior: smooth;
+}
+body {
+      min-width: 550px;
+      border-color: black !important;
+      color: black !important;
+}
+
+a {
+    color: #5d5a5a !important;
+}
+
+.form-control:focus{
+    box-shadow: 0 0 0 0.1rem rgb(235, 236, 237) !important;
+    border-color: gray !important;
+}
+.btn btn-outline-dark:focus {
+    box-shadow: 0 0 0 0.1rem rgb(235, 236, 237) !important;
+}
+
+#messages::-webkit-scrollbar {
+    display: none;
+}
+.windows8 {
+  width: 38px !important;
+  height: 38px !important;
+  margin: 0 !important;
+  padding-left: 5px !important;
+}
+.main {
+    min-height: 100%;
+}
+.maincentre{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.meeting {
+    font-size: 30px;
+    font-family: "Courier New";
+}
+.blockMessage {
+  padding-top:2px;
+  padding-bottom: 2px;
+}
+
+
+.list-group-item {
+  font-size: 14px;
+  margin-bottom: 0;
+  border: 0 !important;
+}
+
+.msgleft {
+  border: 1px solid !important;
+  padding: 30px;
+  border-top: none;
+  border-bottom: none;
+  border-radius: 45px 45px;
+}
+.msgright {
+  border: 1px solid !important;
+  padding: 30px;
+  border-top: none;
+  border-bottom: none;
+  border-radius: 45px 45px;
+}
+
+.list-group-item:last-child {
+  border-bottom-right-radius: 0 !important;
+  border-bottom-left-radius: 0 !important;
+}
+.list-group-item:first-child {
+  border-top-left-radius: 0 !important;
+  border-top-right-radius: 0 !important;
+}
+#messages {
+    overflow: visible;
+    overflow-x: hidden;
+    max-height: 350px;
+    min-height: 350px;
+    word-break: break-word;
+    padding: 10px 10px 10px 10px;
+}
+#wheel {
+    display: none;
+}
+.footer {
+  font-family: "Courier New";
+  font-size: 15px;
+  border-top: 1px solid;
+  color: #2c2c2c;
+  letter-spacing: .05em;
+}
+#footer {
+    min-height: 40px;
+    text-align: center;
+    padding-top: 35px;
+}
+#header {
+    min-height: 150px;
+    text-align: center;
+}
+.header {
+  font-family: "Courier New";
+  font-size: 100px;
+  border-bottom: 2px solid;
+  color: #2c2c2c;
+  letter-spacing: .05em;
+  text-shadow:
+      4px 4px 0px #d5d5d5,
+      7px 7px 0px rgba(0, 0, 0, 0.2);
+}
+
+.shadowText {
+  text-align: center;
+  font-family: "Courier New";
+  padding-top: 35px;
+  border-bottom: 2px solid;
+  margin-bottom: 0px;
+  letter-spacing: .05em;
+  text-shadow:
+      2px 0px 0px #d5d5d5, 3px 0px 0px rgba(0, 0, 0, 0.2);
+}
+
+.shadowText4 {
+  text-align: center;
+  font-family: "Courier New";
+  padding-top: 35px;
+  border-bottom: 2px solid;
+  margin-bottom: 0px;
+  letter-spacing: .05em;
+  text-shadow:
+      2px 0px 0px #d5d5d5, 3px 0px 0px rgba(0, 0, 0, 0.2);
+}
+.shadowText5 {
+  text-align: center;
+  font-family: "Courier New";
+  margin-bottom: 0px;
+  letter-spacing: .05em;
+  font-size: 15px;
+  text-shadow:
+      2px 0px 0px #d5d5d5, 3px 0px 0px rgba(0, 0, 0, 0.2);
+}
+.shadowText2 {
+  text-align: center;
+  font-family: "Courier New";
+  padding-top: 35px;
+  letter-spacing: .05em;
+  text-shadow:
+      2px 0px 0px #d5d5d5, 3px 0px 0px rgba(0, 0, 0, 0.2);
+}
+.shadowText3 {
+  text-align: center;
+  font-family: "Courier New";
+  padding-top: 10px;
+  letter-spacing: .05em;
+  font-size: 15px;
+  text-shadow:
+      2px 0px 0px #d5d5d5, 3px 0px 0px rgba(0, 0, 0, 0.2);
+}
+.blockSubscriber {
+  border: 1px solid;
+  border-radius: 45px 45px !important;
+}
+#subscribers {
+  overflow: visible;
+    overflow-x: hidden;
+    max-height: 350px;
+    min-height: 350px;
+    word-break: break-word;
+    padding: 10px 10px 10px 10px;
+}
+.blockSub {
+  padding-top: 0 !important;
+  padding-bottom: 5 px !important;
+}
+.blockSubscriber:hover {
+  background-color: rgb(236, 236, 236);
+}
+#textInput {
+  font-family: "Arial" !important;
+
+}
+#message {
+  font-family: "Arial" !important;
+  font-size: 13px !important;
+      border: 1.5px solid;
+      border-radius: 45px 0 0 45px;
+
+          min-height: 34.2px;
+}
+
+#searcher {
+      padding-top: 10px;
+}
+#searcherBox {
+  font-family: "Arial" !important;
+  font-size: 13px !important;
+      border: 1px solid;
+      border-radius: 45px 0 0 45px;
+
+          min-height: 34.2px;
+}
+
+.nopadding {
+padding: 0 !important;
+}
+#send_button {
+  font-family: "Arial" !important;
+  font-size: 13px !important;
+  border: 1.5px solid;
+  border-radius: 0 45px 45px 0;
+}
+
+#send_button:hover {
+  font-family: "Arial" !important;
+  color: #fff !important;
+  background-color: #343a40 !important;
+  border-color: #343a40 !important;
+}
+#messager {
+  border: 2px solid;
+  border-top: none;
+  border-bottom: none;
+  border-radius: 30px 90px;
+
+}
+
+.chatNickName {
+  font-weight: bold;
+}
+
+.msgleft:hover {
+  background-color: rgb(236, 236, 236);
+}
+.msgright:hover {
+  background-color: rgb(236, 236, 236);
+}
+
+.rightMessages {
+  font-family: 'Arial';
+      text-align: left;
+       padding-left: 47% !important;
+       padding-bottom: 0 !important;
+         padding-top: 0 !important;
+         padding-right: 0 !important;
+
+}
+
+.leftMessages {
+  font-family: 'Arial';
+  text-align: left;
+  padding-right: 47% !important;
+  padding-bottom: 0 !important;
+  padding-top: 0 !important;
+  padding-left: 0 !important;
+}
+.mailImage {
+  height: 15px;
+  width: 15px;
+  margin-bottom: 2px;
+}
+
+.chatMessageTime {
+  font-size: 10px !important;
+  color: #c1c0c0;
+  text-align: right;
+  display:inline;
+}
+.textMessage {
+  margin: 0;
+}
+
+/* START TOOLTIP STYLES */
+[tooltip] {
+  position: relative; /* opinion 1 */
+  word-wrap: break-word;
+  font-size: 12px;
+  width: 90%;
+}
+
+/* Applies to all tooltips */
+[tooltip]::before,
+[tooltip]::after {
+  text-transform: none; /* opinion 2 */
+  font-size: .9em; /* opinion 3 */
+  line-height: 1;
+  user-select: none;
+  pointer-events: none;
+  position: absolute;
+  display: none;
+  opacity: 0;
+}
+[tooltip]::before {
+  content: '';
+  border: 5px solid transparent; /* opinion 4 */
+  z-index: 1001; /* absurdity 1 */
+}
+[tooltip]::after {
+  content: attr(tooltip); /* magic! */
+
+  /* most of the rest of this is opinion */
+  font-family: Helvetica, sans-serif;
+  text-align: center;
+
+  /*
+    Let the content set the size of the tooltips
+    but this will also keep them from being obnoxious
+    */
+    min-width: 100%;
+      max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding: 1ch 1.5ch;
+  border-radius: .3ch;
+  box-shadow: 0 1em 2em -.5em rgba(0, 0, 0, 0.35);
+  background: #333;
+  color: #fff;
+  z-index: 1000; /* absurdity 2 */
+}
+
+/* Make the tooltips respond to hover */
+[tooltip]:hover::before,
+[tooltip]:hover::after {
+  display: block;
+}
+
+/* don't show empty tooltips */
+[tooltip='']::before,
+[tooltip='']::after {
+  display: none !important;
+}
+
+/* FLOW: UP */
+[tooltip]:not([flow])::before,
+[tooltip][flow^="up"]::before {
+  bottom: 100%;
+  border-bottom-width: 0;
+  border-top-color: #333;
+}
+[tooltip]:not([flow])::after,
+[tooltip][flow^="up"]::after {
+  bottom: calc(100% + 5px);
+}
+[tooltip]:not([flow])::before,
+[tooltip]:not([flow])::after,
+[tooltip][flow^="up"]::before,
+[tooltip][flow^="up"]::after {
+  left: 50%;
+  transform: translate(-50%, -.5em);
+}
+
+/* FLOW: DOWN */
+[tooltip][flow^="down"]::before {
+  top: 100%;
+  border-top-width: 0;
+  border-bottom-color: #333;
+}
+[tooltip][flow^="down"]::after {
+  top: calc(100% + 5px);
+}
+[tooltip][flow^="down"]::before,
+[tooltip][flow^="down"]::after {
+  left: 50%;
+  transform: translate(-50%, .5em);
+}
+
+/* FLOW: LEFT */
+[tooltip][flow^="left"]::before {
+  top: 50%;
+  border-right-width: 0;
+  border-left-color: #333;
+  left: calc(0em - 5px);
+  transform: translate(-.5em, -50%);
+}
+[tooltip][flow^="left"]::after {
+  top: 50%;
+  right: calc(100% + 5px);
+  transform: translate(-.5em, -50%);
+}
+
+/* FLOW: RIGHT */
+[tooltip][flow^="right"]::before {
+  top: 50%;
+  border-left-width: 0;
+  border-right-color: #333;
+  right: calc(0em - 5px);
+  transform: translate(.5em, -50%);
+}
+[tooltip][flow^="right"]::after {
+  top: 50%;
+  left: calc(100% + 5px);
+  transform: translate(.5em, -50%);
+}
+
+/* KEYFRAMES */
+@keyframes tooltips-vert {
+  to {
+    opacity: .9;
+    transform: translate(-50%, 0);
+  }
+}
+
+@keyframes tooltips-horz {
+  to {
+    opacity: .9;
+    transform: translate(0, -50%);
+  }
+}
+
+/* FX All The Things */
+[tooltip]:not([flow]):hover::before,
+[tooltip]:not([flow]):hover::after,
+[tooltip][flow^="up"]:hover::before,
+[tooltip][flow^="up"]:hover::after,
+[tooltip][flow^="down"]:hover::before,
+[tooltip][flow^="down"]:hover::after {
+  animation: tooltips-vert 300ms ease-out forwards;
+}
+
+[tooltip][flow^="left"]:hover::before,
+[tooltip][flow^="left"]:hover::after,
+[tooltip][flow^="right"]:hover::before,
+[tooltip][flow^="right"]:hover::after {
+  animation: tooltips-horz 300ms ease-out forwards;
+}
