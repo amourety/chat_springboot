@@ -8,10 +8,11 @@ import ReactDOMServer from 'react-dom/server';
 import SockJS from 'sockjs-client';
 import $ from 'jquery';
 export default class ChatPage extends React.Component {
+
   render(){
 
   return (
-    <div className="container" onLoad={connect()}>
+    <div className="container">
   <div className="row">
     <div className="col-lg-3">
     <h2 className="shadowText4">IN ROOM</h2>
@@ -86,7 +87,39 @@ export default class ChatPage extends React.Component {
   )
 }
 
+connect() {
+  // создаем объект SockJs
+  var socket = new SockJS('http://localhost:8080/chat');
+  var Stomp = require('stompjs');
+  // создаем stomp-клиент поверх sockjs
+  stompClient = Stomp.over(socket);
+
+  stompClient.reconnect_delay = 5000;
+
+  // при подключении
+  stompClient.connect({"USERNAME":localStorage.getItem('USERNAME')}, function (frame) {
+
+      console.log('Connected: ' + frame);
+      var user = {
+        "username": localStorage.getItem('USERNAME'),
+        "chatId": localStorage.getItem('CHAT_ID')
+      }
+
+      stompClient.send('/messageStomp/register', {}, JSON.stringify(user))
+      // подписываемся на url
+      stompClient.subscribe('/chat/' + localStorage.getItem('CHAT_ID') + '/subscribers', function (message) {
+        //ReactDOM.render(<SubscriberContainer />, document.getElementById('subscribers'))
+        newSubscriber(JSON.parse(message.body))
+      });
+      // подписываемся на url
+      stompClient.subscribe('/chat/' + localStorage.getItem('CHAT_ID'), function (message) {
+        showMessage(JSON.parse(message.body))
+      });
+      let url = 'http://localhost:8080/chat/' + localStorage.getItem('CHAT_ID') + '/subscribers';
+  });
+}
 componentDidMount(){
+  this.connect()
   document.getElementById('leftRouter').addEventListener('click',left)
   document.getElementById('rightRouter').addEventListener('click',right)
   if (localStorage.getItem('CHAT_ID') == 1000) {
@@ -122,66 +155,6 @@ componentDidMount(){
 
 var stompClient = null;
 
-function setConnected(connected) {
-    $("#connect").prop("disabled", connected);
-    $("#disconnect").prop("disabled", !connected);
-    if (connected) {
-        $("#conversation").show();
-    }
-    else {
-        $("#conversation").hide();
-    }
-    $("#greetings").html("");
-}
-
-function connect() {
-    // создаем объект SockJs
-    var socket = new SockJS('http://localhost:8080/chat');
-    var Stomp = require('stompjs');
-    // создаем stomp-клиент поверх sockjs
-    stompClient = Stomp.over(socket);
-
-    // при подключении
-    stompClient.connect({"USERNAME":localStorage.getItem('USERNAME')}, function (frame) {
-        setConnected(true);
-        console.log('Connected: ' + frame);
-        var user = {
-          "username": localStorage.getItem('USERNAME'),
-          "chatId": localStorage.getItem('CHAT_ID')
-        }
-
-        stompClient.send('/messageStomp/register', {}, JSON.stringify(user))
-        // подписываемся на url
-        stompClient.subscribe('/chat/' + localStorage.getItem('CHAT_ID') + '/subscribers', function (message) {
-          //ReactDOM.render(<SubscriberContainer />, document.getElementById('subscribers'))
-          newSubscriber(JSON.parse(message.body))
-        });
-        // подписываемся на url
-        stompClient.subscribe('/chat/' + localStorage.getItem('CHAT_ID'), function (message) {
-          showMessage(JSON.parse(message.body))
-        });
-        let url = 'http://localhost:8080/chat/' + localStorage.getItem('CHAT_ID') + '/subscribers';
-        // fetch(url, {
-        //   method: 'POST',
-        //   mode: 'cors',
-        //   headers:{
-        //     'AUTH': localStorage.getItem('AUTH'),
-        //     'Access-Control-Allow-Origin':'*'
-        //   },
-        // }).then(response => response.json())
-        // .then(data => {
-        // }
-        // )
-    });
-}
-
-function disconnect() {
-    if (stompClient !== null) {
-        stompClient.disconnect();
-    }
-    setConnected(false);
-    console.log("Disconnected");
-}
 
 // отправка
 function sendMessage() {
@@ -281,75 +254,3 @@ function right(){
       window.location.replace(window.location.protocol + '/chat/' + nextChatId);
     }
 }
-
-
-// function sendMessage() {
-//
-//    $('#wheel').show();
-//    let text = document.getElementById('message').value;
-//    document.getElementById('message').value = "";
-//    let body = {
-//        text: text
-//    };
-//
-//    $.ajax({
-//        url: 'http://localhost:8080/messages',
-//        method: 'POST',
-//        data: JSON.stringify(body),
-//        contentType: 'application/json',
-//        dataType: 'json',
-//        headers: {
-//          "AUTH": localStorage.getItem('AUTH')
-//        },
-//        complete: function () {
-//
-//        }
-//    });
-// }
-// function receiveMessage() {
-//    $.ajax({
-//        url: 'http://localhost:8080/messages',
-//        method: 'GET',
-//        dataType: 'json',
-//        contentType: 'application/json',
-//        headers: {
-//          "AUTH": localStorage.getItem('AUTH')
-//        },
-//        success: function (response) {
-//            let html = "";
-//            for (let i = 0; i < response.length; i++) {
-//                html = html + '<li class="list-group-item" style="font-family: \'Courier New\'"><img style="height: 25px; width: 25px" src="https://www.freepngimg.com/thumb/telephone/68708-ipma-message-icon-email-telephone-png-image-high-quality.png">  ' + response[i].username + ': ' + response[i].text + ' <p style="font-size: 12px;color: #c1c0c0;">' + response[i].time + '</p></li>';
-//            }
-//            $('#messages').html(html);
-//            $('#wheel').hide();
-//            receiveMessage();
-//        }
-//    })
-// }
-// let flagIsNotLogin = true
-//
-// function login() {
-//     if (flagIsNotLogin) {
-//     flagIsNotLogin = false;
-//     document.getElementById('messages').scrollTop = 9999;
-//     let body = {
-//         text: 'зашел в чат...',
-//         username: '123'
-//     };
-//     connect(localStorage.getItem('USERNAME'));
-//
-//     $.ajax({
-//         url: 'http://localhost:8080/messages',
-//         method: 'POST',
-//         data: JSON.stringify(body),
-//         contentType: 'application/json',
-//         dataType: 'json',
-//         headers: {
-//           "AUTH": localStorage.getItem('AUTH')
-//         },
-//         complete: function () {
-//             receiveMessage();
-//         }
-//     });
-//   }
-// }
