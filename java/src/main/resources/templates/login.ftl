@@ -21,14 +21,18 @@
             crossorigin="anonymous"></script>
 </head>
 <body>
-<div id="header"><h1 style="font-size: 100px;border-bottom: 2px solid">CHAT<img style="height: 100px;width: 100px;padding-bottom: 10px;" src="https://www.freepngimg.com/thumb/telephone/68708-ipma-message-icon-email-telephone-png-image-high-quality.png">ROOM</h1></div>
+<div id="header"><h1 style="font-size: 100px;border-bottom: 2px solid">CHAT<img
+                style="height: 100px;width: 100px;padding-bottom: 10px;"
+                src="https://www.freepngimg.com/thumb/telephone/68708-ipma-message-icon-email-telephone-png-image-high-quality.png">ROOM
+    </h1></div>
 <div class="container">
     <div class="main">
         <div class="maincentre">
-            <form class="form-signin" role="form" method="post" action="login" style="padding-top: 50px;min-width: 300px;max-width: 300px;">
+            <form class="form-signin" role="form" method="post" action="login"
+                  style="padding-top: 50px;min-width: 300px;max-width: 300px;">
                 <h2 class="form-signin-heading" style="font-family: 'Courier New';">Please sign in</h2>
                 <input id="login" name="login" type="text" class="form-control" placeholder="Login" required=""
-                       autof    ocus="" style="margin-bottom: 3px">
+                       autof ocus="" style="margin-bottom: 3px">
                 <input id="password" name="password" type="password" class="form-control" placeholder="Password"
                        required="">
                 <br>

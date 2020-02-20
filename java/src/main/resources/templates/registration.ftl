@@ -21,7 +21,10 @@
             crossorigin="anonymous"></script>
 </head>
 <body>
-<div id="header"><h1 style="font-size: 100px;border-bottom: 2px solid">CHAT<img style="height: 100px;width: 100px;padding-bottom: 10px;" src="https://www.freepngimg.com/thumb/telephone/68708-ipma-message-icon-email-telephone-png-image-high-quality.png">ROOM</h1></div>
+<div id="header"><h1 style="font-size: 100px;border-bottom: 2px solid">CHAT<img
+                style="height: 100px;width: 100px;padding-bottom: 10px;"
+                src="https://www.freepngimg.com/thumb/telephone/68708-ipma-message-icon-email-telephone-png-image-high-quality.png">ROOM
+    </h1></div>
 <div class="container">
     <div class="main">
         <div class="maincentre">

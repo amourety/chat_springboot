@@ -26,21 +26,22 @@
 </head>
 <body onload="login();">
 <div id="header"><h1 style="font-size: 100px;border-bottom: 2px solid;">CHAT<img id="mail_img"
-        style="height: 100px;width: 100px;padding-bottom: 10px;"
-        src="https://www.freepngimg.com/thumb/telephone/68708-ipma-message-icon-email-telephone-png-image-high-quality.png">ROOM
-</h1></div>
+                                                                                 style="height: 100px;width: 100px;padding-bottom: 10px;"
+                                                                                 src="https://www.freepngimg.com/thumb/telephone/68708-ipma-message-icon-email-telephone-png-image-high-quality.png">ROOM
+    </h1></div>
 <div class="container">
-    <div class="row" >
+    <div class="row">
         <div class="col-lg-4 col-md-3"></div>
         <div class="col-lg-4 col-md-6 col-sm-12" style="border: 2px solid black;">
             <h2 style="text-align: center; font-family: 'Courier New';padding-top: 35px;border-bottom: 2px solid;">
                 FLAT|${user_username}</h2>
             <ul id="messages" class="list-group">
-                        <#list messages as m>
-                            <li class="list-group-item" style="font-family: 'Courier New'"><img
-                                    style="height: 25px; width: 25px"
-                                    src="https://www.freepngimg.com/thumb/telephone/68708-ipma-message-icon-email-telephone-png-image-high-quality.png">  ${m.username}: ${m.text} <p style="font-size: 12px;color: #c1c0c0;">${m.time}</p></li>
-                        </#list>
+                <#list messages as m>
+                    <li class="list-group-item" style="font-family: 'Courier New'"><img
+                                style="height: 25px; width: 25px"
+                                src="https://www.freepngimg.com/thumb/telephone/68708-ipma-message-icon-email-telephone-png-image-high-quality.png"> ${m.username}
+                        : ${m.text} <p style="font-size: 12px;color: #c1c0c0;">${m.time}</p></li>
+                </#list>
             </ul>
             <div class="container">
                 <div class="row" style="border-top: 2px solid;
