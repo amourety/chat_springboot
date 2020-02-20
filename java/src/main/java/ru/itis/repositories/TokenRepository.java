@@ -23,6 +23,7 @@ public class TokenRepository implements CrudRepository<Token> {
             .createdAt(resultSet.getTimestamp("start_time").toLocalDateTime())
             .expiredDateTime(resultSet.getTimestamp("end_time").toLocalDateTime())
             .build();
+
     @Override
     public List<Token> findAll() {
         return null;
@@ -41,7 +42,7 @@ public class TokenRepository implements CrudRepository<Token> {
         //language=SQL
         String SQL2 = "DELETE from tokens where user_id = ?";
         template.update(SQL2, model.getUserId());
-        template.update(SQL, model.getValue(),model.getUserId(), Timestamp.valueOf(model.getCreatedAt()), Timestamp.valueOf(model.getExpiredDateTime()));
+        template.update(SQL, model.getValue(), model.getUserId(), Timestamp.valueOf(model.getCreatedAt()), Timestamp.valueOf(model.getExpiredDateTime()));
     }
 
     @Override

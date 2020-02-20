@@ -52,10 +52,13 @@ public class MessageRepository implements CrudRepository<Message> {
 
     @Override
     public List<Message> findAll() {
-        return template.query(FIND_ALL_30,rowMapper);
+        return template.query(FIND_ALL_30, rowMapper);
     }
 
-    public List<MessageDto> findMessageAsString(Long id) {return template.query(FIND_ALL_AS_STRING,rowMapperMD, id);}
+    public List<MessageDto> findMessageAsString(Long id) {
+        return template.query(FIND_ALL_AS_STRING, rowMapperMD, id);
+    }
+
     @Override
     public Message find(Long id) {
         return null;
@@ -63,7 +66,7 @@ public class MessageRepository implements CrudRepository<Message> {
 
     @Override
     public void save(Message model) {
-        template.update(SAVE, model.getUserId(),model.getText(),new Timestamp(System.currentTimeMillis()));
+        template.update(SAVE, model.getUserId(), model.getText(), new Timestamp(System.currentTimeMillis()));
     }
 
     @Override
@@ -72,6 +75,6 @@ public class MessageRepository implements CrudRepository<Message> {
     }
 
     public void saveWS(MessageDto model) {
-        template.update(SAVEWS, model.getText(), new Timestamp(System.currentTimeMillis()),model.getChatId(), model.getUsername());
+        template.update(SAVEWS, model.getText(), new Timestamp(System.currentTimeMillis()), model.getChatId(), model.getUsername());
     }
 }

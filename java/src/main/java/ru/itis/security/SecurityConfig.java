@@ -30,6 +30,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.authenticationProvider(provider);
     }
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable();

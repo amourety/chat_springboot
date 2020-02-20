@@ -22,9 +22,9 @@ public class ChatController {
     @CrossOrigin(origins = "*")
     @PreAuthorize("permitAll()")
     public ResponseEntity<User> getUsername() {
-         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-         User transferUser = User.builder().username(user.getUsername()).build();
-         return ResponseEntity.ok(transferUser);
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User transferUser = User.builder().username(user.getUsername()).build();
+        return ResponseEntity.ok(transferUser);
     }
 
     @GetMapping("/chat/{id}/messages")

@@ -58,7 +58,7 @@ public class UsersDetailsImpl implements UserDetails {
         return user;
     }
 
-    public Token getCurrentToken(){
+    public Token getCurrentToken() {
         return currentToken;
     }
 }

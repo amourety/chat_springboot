@@ -29,25 +29,29 @@ public class LoginService {
     public TokenDto authenticate(LoginDto loginData) {
         User userCandidate = userRepository.findByUsername(loginData.getLogin());
         if (userCandidate != null) {
-            if(validatePassword(loginData.getPassword(),userCandidate.getPassword())){
+            if (validatePassword(loginData.getPassword(), userCandidate.getPassword())) {
                 return createToken(userCandidate);
             }
-        } throw new BadCredentialsException("Incorrect login or password");
+        }
+        throw new BadCredentialsException("Incorrect login or password");
     }
 
     private boolean validatePassword(String password, String hashPassword) {
         return passwordEncoder.matches(password, hashPassword);
     }
-    private TokenDto createToken(User userCandidate){
+
+    private TokenDto createToken(User userCandidate) {
         Token token = generateToken(userCandidate);
         tokenRepository.save(token);
         return TokenDto.from(token.getValue());
     }
+
     public String validationByToken(String value) {
         User user = userRepository.findUserByTokenWithoutData(value);
-        return user != null ? "valid": "invalid";
+        return user != null ? "valid" : "invalid";
     }
-    private Token generateToken(User userCandidate){
+
+    private Token generateToken(User userCandidate) {
         return Token.builder()
                 .value(UUID.randomUUID().toString())
                 .userId(userCandidate.getId())

@@ -27,12 +27,14 @@ public class AppConfig {
         dataSource.setDriverClassName(environment.getProperty("spring.datasource.driver-class-name"));
         return dataSource;
     }
+
     @Bean
     public RestTemplate getRestTemplate() {
         return new RestTemplate();
     }
+
     @Bean
-    public JdbcTemplate jdbcTemplate(){
+    public JdbcTemplate jdbcTemplate() {
         return new JdbcTemplate(dataSource());
     }
 

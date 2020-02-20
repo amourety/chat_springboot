@@ -63,6 +63,7 @@ public class CustomInterceptor extends ChannelInterceptorAdapter {
         System.out.println(message);
         return message;
     }
+
     private Message<?> constructMessage(String sessionId, Long chatId) throws JsonProcessingException {
         byte[] bytes = new ObjectMapper().writeValueAsBytes(chatId);
         StompHeaderAccessor headers = StompHeaderAccessor.create(StompCommand.SEND);

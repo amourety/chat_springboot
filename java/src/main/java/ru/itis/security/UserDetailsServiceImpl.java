@@ -19,7 +19,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String name) throws UsernameNotFoundException, DataAccessException {
         User user = userRepository.findByUsernameToken(name);
-        if (user != null){
+        if (user != null) {
             return new UsersDetailsImpl(user, user.getToken());
         }
         return null;
@@ -27,7 +27,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     public UserDetails loadUserByUsernameByToken(String token) {
         User user = userRepository.findUserByToken(token);
-        if (user != null){
+        if (user != null) {
             return new UsersDetailsImpl(user, user.getToken());
         }
         return null;

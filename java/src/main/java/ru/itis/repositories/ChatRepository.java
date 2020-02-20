@@ -37,29 +37,30 @@ public class ChatRepository implements CrudRepository<Location> {
         //language=SQL
         String SQL = "SELECT * FROM chat_room WHERE username = ?";
         try {
-            return template.queryForObject(SQL,roomRowMapper,username);
-        } catch (EmptyResultDataAccessException e){
+            return template.queryForObject(SQL, roomRowMapper, username);
+        } catch (EmptyResultDataAccessException e) {
             return null;
         }
     }
-    public List<Location> findAllByChat(Long chatId){
+
+    public List<Location> findAllByChat(Long chatId) {
         //language=SQL
         String SQL = "SELECT * FROM chat_room where chatid = ?";
-        return template.query(SQL,roomRowMapper,chatId);
+        return template.query(SQL, roomRowMapper, chatId);
     }
 
     @Override
     public void save(Location model) {
         //language=SQL
         String SQL = "INSERT INTO chat_room(username, chatid) VALUES (?,?)";
-        template.update(SQL, model.getUsername(),model.getChatId());
+        template.update(SQL, model.getUsername(), model.getChatId());
     }
 
     @Override
     public void update(Location model) {
         //language=SQL
         String SQL = "UPDATE chat_room set chatid = ? WHERE username = ?";
-        template.update(SQL,model.getChatId(), model.getUsername());
+        template.update(SQL, model.getChatId(), model.getUsername());
     }
 
     public Location findAliveChat() {
@@ -67,7 +68,7 @@ public class ChatRepository implements CrudRepository<Location> {
         String SQL = "SELECT * FROM chat_room where chatid is not NULL LIMIT 1";
         try {
             return template.queryForObject(SQL, roomRowMapper);
-        } catch (EmptyResultDataAccessException e){
+        } catch (EmptyResultDataAccessException e) {
             return null;
         }
     }

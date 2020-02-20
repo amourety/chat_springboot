@@ -4,11 +4,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.ResponseBody;
 import ru.itis.dto.LoginDto;
 import ru.itis.dto.TokenDto;
 import ru.itis.dto.TokenValid;
-import ru.itis.services.ChatService;
 import ru.itis.services.LoginService;
 
 
@@ -30,7 +32,7 @@ public class LoginController {
     @CrossOrigin(origins = "*")
     @PreAuthorize("permitAll()")
     @ResponseBody
-    public TokenValid validToken(@RequestBody TokenDto token){
+    public TokenValid validToken(@RequestBody TokenDto token) {
         return TokenValid.builder().valid(service.validationByToken(token.getValue())).build();
     }
 }

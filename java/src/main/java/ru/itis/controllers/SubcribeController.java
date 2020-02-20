@@ -14,11 +14,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import ru.itis.dto.RegisterDto;
-import ru.itis.models.Location;
 import ru.itis.services.ChatService;
-import ru.itis.services.UserService;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -32,13 +29,14 @@ public class SubcribeController {
 
     @MessageMapping("/register")
     public void subscribe(@Payload RegisterDto register) {
-        if (!service.isUserWithoutChatRoom(register.getUsername())){
-            service.updateUserChat(register.getUsername(),register.getChatId());
+        if (!service.isUserWithoutChatRoom(register.getUsername())) {
+            service.updateUserChat(register.getUsername(), register.getChatId());
         } else {
             service.saveUserToChat(register.getUsername(), register.getChatId());
         }
         template.convertAndSend("/chat/" + register.getChatId() + "/subscribers", service.getChatRoomUserNames(String.valueOf(register.getChatId())));
     }
+
     @MessageMapping("/notify")
     public void refresh(@Header("CHAT_ID") String chatId) {
         template.convertAndSend("/chat/" + chatId + "/subscribers", service.getChatRoomUserNames(String.valueOf(chatId)));

@@ -20,7 +20,7 @@ public class TokenAuthenticationProvider implements AuthenticationProvider {
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
 
         TokenAuthentication tokenAuthentication
-                = (TokenAuthentication)authentication;
+                = (TokenAuthentication) authentication;
         UsersDetailsImpl userDetails = (UsersDetailsImpl) service.loadUserByUsernameByToken(tokenAuthentication.getName());
         if (userDetails != null) {
             tokenAuthentication.setUserDetails(userDetails);

@@ -1,4 +1,5 @@
 package ru.itis.dto;
+
 import lombok.Builder;
 import lombok.Data;
 
@@ -13,6 +14,7 @@ public class MessageDto {
     private String text;
     private String time;
     private Long chatId;
+
 
     public void addTime() {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");

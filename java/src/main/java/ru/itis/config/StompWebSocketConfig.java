@@ -4,7 +4,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.messaging.simp.config.ChannelRegistration;
 import org.springframework.messaging.simp.config.MessageBrokerRegistry;
-import org.springframework.web.socket.config.annotation.*;
+import org.springframework.web.socket.config.annotation.EnableWebSocket;
+import org.springframework.web.socket.config.annotation.EnableWebSocketMessageBroker;
+import org.springframework.web.socket.config.annotation.StompEndpointRegistry;
+import org.springframework.web.socket.config.annotation.WebSocketMessageBrokerConfigurer;
 import ru.itis.interceptors.CustomInterceptor;
 
 @Configuration
@@ -18,14 +21,10 @@ public class StompWebSocketConfig implements WebSocketMessageBrokerConfigurer {
 
     @Override
     public void configureMessageBroker(MessageBrokerRegistry config) {
-//        // включил in memory MessageBroker
-//        config.enableSimpleBroker("/topic");
-        // указал, куда могут быть направлены сообщения
         config.setApplicationDestinationPrefixes("/messageStomp");
     }
 
     public void registerStompEndpoints(StompEndpointRegistry stompEndpointRegistry) {
-        // обозначили точку подключения
         stompEndpointRegistry.addEndpoint("/chat").setAllowedOrigins("*").withSockJS();
     }
 

@@ -51,7 +51,6 @@ public class UserRepository implements CrudRepository<User> {
             .build();
 
 
-
     @Override
     public List<User> findAll() {
         return null;
@@ -75,6 +74,7 @@ public class UserRepository implements CrudRepository<User> {
             return null;
         }
     }
+
     public User findByUsername(String username) {
         //language=SQL
         String SQL = "SELECT * FROM users u where u.username = ?";
@@ -104,7 +104,8 @@ public class UserRepository implements CrudRepository<User> {
             return null;
         }
     }
-    public User findUserByTokenWithoutData(String token){
+
+    public User findUserByTokenWithoutData(String token) {
         //language=SQL
         String SQL = "SELECT u.id, u.username FROM users u join tokens token2 on u.id  = token2.user_id where token2.value = ?";
         try {
